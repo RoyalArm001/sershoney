@@ -1,0 +1,16 @@
+# next.js
+node_modules
+.next
+.next-dev
+out
+.vercel
+tsconfig.tsbuildinfo
+*.log
+.DS_Store
+
+# Local secrets and customer order data
+.env
+.env.local
+.env.*.local
+!.env.example
+data/orders.json

@@ -1,0 +1,6 @@
+.next-dev
+tsconfig.tsbuildinfo
+data/orders.json
+.env
+.env.local
+.env.*.local
