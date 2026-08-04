@@ -21,3 +21,6 @@ build/
 .vercel/
 .env.development.local
 .env.production.local
+
+.vercel
+.env*
