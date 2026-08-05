@@ -14,6 +14,12 @@ import {
 } from "@/content/regions";
 import { COMBO_PACKAGES, PICKUP_LOCATION, getComboById } from "@/content/pickup";
 import { rememberOrder } from "@/lib/order-history";
+import {
+  CUSTOMER_NOTIFY_COPY,
+  customerNotificationsEnabled,
+  enableCustomerNotifications,
+  notifyOrderPlaced,
+} from "@/lib/customer-notifications";
 import type { CustomerOrderSummary } from "@/types/order";
 
 type OrderFormProps = {
@@ -70,6 +76,12 @@ export function OrderForm({ lang, copy }: OrderFormProps) {
   const [step, setStep] = useState<1 | 2 | 3>(1);
   const [submitState, setSubmitState] = useState<
     "idle" | "submitting" | "success" | "error"
+  >("idle");
+  const [placedOrder, setPlacedOrder] = useState<CustomerOrderSummary | null>(
+    null,
+  );
+  const [notifyState, setNotifyState] = useState<
+    "idle" | "prompt" | "enabled" | "denied" | "unsupported"
   >("idle");
   const [coordsCopied, setCoordsCopied] = useState(false);
   const [comboOpen, setComboOpen] = useState(true);
@@ -176,10 +188,33 @@ export function OrderForm({ lang, copy }: OrderFormProps) {
       }
 
       rememberOrder(result.order);
+      setPlacedOrder(result.order);
       setSubmitState("success");
+
+      if (customerNotificationsEnabled()) {
+        setNotifyState("enabled");
+        void notifyOrderPlaced(result.order, lang);
+      } else if ("Notification" in window) {
+        setNotifyState("prompt");
+      } else {
+        setNotifyState("unsupported");
+      }
     } catch (error) {
       console.error(error);
       setSubmitState("error");
+    }
+  };
+
+  const handleEnableNotifications = async () => {
+    const result = await enableCustomerNotifications();
+    if (!result.ok) {
+      setNotifyState(result.reason);
+      return;
+    }
+
+    setNotifyState("enabled");
+    if (placedOrder) {
+      void notifyOrderPlaced(placedOrder, lang);
     }
   };
 
@@ -190,6 +225,8 @@ export function OrderForm({ lang, copy }: OrderFormProps) {
   ] as const;
 
   if (submitState === "success") {
+    const notifyCopy = CUSTOMER_NOTIFY_COPY[lang];
+
     return (
       <motion.div
         initial={{ opacity: 0, y: 12 }}
@@ -201,6 +238,46 @@ export function OrderForm({ lang, copy }: OrderFormProps) {
         <p className="text-[var(--gold-soft)]">
           {data.quantity === 1 ? copy.successSingle : copy.success}
         </p>
+        <p className="mt-3 text-sm text-[var(--muted)]">{notifyCopy.savedLocal}</p>
+
+        {notifyState === "prompt" && (
+          <div className="mt-5 rounded-sm border border-[var(--line)] bg-[var(--field-bg)] p-4 text-left">
+            <p className="font-medium text-[var(--ink)]">{notifyCopy.enableTitle}</p>
+            <p className="mt-2 text-sm text-[var(--muted)]">{notifyCopy.enableBody}</p>
+            <button
+              type="button"
+              onClick={() => void handleEnableNotifications()}
+              className="button-ink mt-4 inline-flex min-h-11 w-full items-center justify-center bg-gradient-to-b from-[var(--gold-soft)] to-[var(--gold)] px-4 text-sm font-semibold"
+            >
+              {notifyCopy.enableCta}
+            </button>
+          </div>
+        )}
+
+        {notifyState === "enabled" && (
+          <p className="mt-4 text-sm text-green-700 dark:text-green-300">
+            {notifyCopy.enabled}
+          </p>
+        )}
+
+        {notifyState === "denied" && (
+          <p className="mt-4 text-sm text-[var(--muted)]">{notifyCopy.denied}</p>
+        )}
+
+        {notifyState === "unsupported" && (
+          <p className="mt-4 text-sm text-[var(--muted)]">{notifyCopy.unsupported}</p>
+        )}
+
+        <a
+          href="#my-orders"
+          className="mt-5 inline-flex text-sm text-[var(--gold-soft)] underline-offset-2 hover:underline"
+        >
+          {lang === "hy"
+            ? "Դիտել իմ պատվերները"
+            : lang === "ru"
+              ? "Смотреть мои заказы"
+              : "View my orders"}
+        </a>
       </motion.div>
     );
   }

@@ -16,6 +16,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
   ) as Record<string, string>;
   orderAlternates["x-default"] = `${baseUrl}/hy/order`;
 
+  const partnershipAlternates = Object.fromEntries(
+    SUPPORTED_LANGS.map((lang) => [lang, `${baseUrl}/${lang}/partnership`])
+  ) as Record<string, string>;
+  partnershipAlternates["x-default"] = `${baseUrl}/hy/partnership`;
+
   const homePages: MetadataRoute.Sitemap = SUPPORTED_LANGS.map((lang) => ({
     url: `${baseUrl}/${lang}`,
     lastModified: now,
@@ -32,6 +37,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
     alternates: { languages: orderAlternates },
   }));
 
+  const partnershipPages: MetadataRoute.Sitemap = SUPPORTED_LANGS.map((lang) => ({
+    url: `${baseUrl}/${lang}/partnership`,
+    lastModified: now,
+    changeFrequency: "monthly",
+    priority: 0.7,
+    alternates: { languages: partnershipAlternates },
+  }));
+
   return [
     {
       url: baseUrl,
@@ -42,5 +55,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
     ...homePages,
     ...orderPages,
+    ...partnershipPages,
   ];
 }

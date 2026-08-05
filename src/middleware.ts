@@ -11,6 +11,17 @@ export async function middleware(request: NextRequest) {
   const lang = isLang(maybeLang || "") ? maybeLang : "hy";
   requestHeaders.set("x-lang", lang);
 
+  // Allow admin PWA assets without a session cookie.
+  if (
+    pathname === "/sw.js" ||
+    pathname === "/sw-admin.js" ||
+    pathname === "/admin-manifest.webmanifest"
+  ) {
+    return NextResponse.next({
+      request: { headers: requestHeaders },
+    });
+  }
+
   // Protect admin routes
   if (pathname.startsWith("/admin") && pathname !== "/admin/login") {
     const token = request.cookies.get("session")?.value;
@@ -44,6 +55,6 @@ export async function middleware(request: NextRequest) {
 
 export const config = {
   matcher: [
-    "/((?!_next/static|_next/image|favicon.ico|images/|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",
+    "/((?!_next/static|_next/image|favicon.ico|images/|sw\\.js|sw-admin\\.js|admin-manifest\\.webmanifest|.*\\.(?:svg|png|jpg|jpeg|gif|webp|webmanifest)$).*)",
   ],
 };

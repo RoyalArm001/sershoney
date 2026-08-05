@@ -111,9 +111,9 @@ export type LocaleCopy = {
 
 export const locales: Record<Lang, LocaleCopy> = {
   hy: {
-    metaTitle: "Sers Honey | Բնական մեղր Վայքից, Հայաստան",
+    metaTitle: "Մեղր Հայաստանից | Sers Honey՝ բնական լեռնային մեղր Վայքից",
     metaDescription:
-      "Sers Honey՝ 100% բնական լեռնային մեղր Վայքից, Վայոց ձոր, Հայաստան։ Մեղրի տեսականի՝ 450գ, 900գ և 1000գ տարաներով, նվերային փաթեթավորմամբ։",
+      "Գնեք բնական մեղր Հայաստանից։ Sers Honey՝ 100% բնական լեռնային բազմածաղիկ մեղր Վայքից, Վայոց ձոր։ Մեղր գնել առցանց՝ 450գ, 900գ, 1000գ, առաքում Հայաստանում։",
     nav: {
       about: "Մեր մասին",
       products: "Տեսականի",
@@ -242,9 +242,9 @@ export const locales: Record<Lang, LocaleCopy> = {
     footerMeta: "100% բնական արտադրանք",
   },
   en: {
-    metaTitle: "Sers Honey | Natural Armenian Honey from Vayots Dzor",
+    metaTitle: "Buy Natural Honey in Armenia | Sers Honey Mountain Honey",
     metaDescription:
-      "Discover Sers Honey, 100% natural mountain multifloral honey from Sers village near Vayk, Vayots Dzor, Armenia. Available in 450g, 900g and 1000g jars.",
+      "Buy natural Armenian honey online. Sers Honey is 100% natural mountain multifloral honey from Vayk, Vayots Dzor. Order honey in 450g, 900g and 1000g jars with delivery in Armenia.",
     nav: {
       about: "About",
       products: "Products",
@@ -373,9 +373,9 @@ export const locales: Record<Lang, LocaleCopy> = {
     footerMeta: "100% natural product",
   },
   ru: {
-    metaTitle: "Sers Honey | Натуральный армянский мёд из Вайоц-Дзора",
+    metaTitle: "Купить натуральный мёд в Армении | Sers Honey горный мёд",
     metaDescription:
-      "Sers Honey — 100% натуральный горный разнотравный мёд из села Серс рядом с Вайком, Вайоц-Дзор, Армения. Банки 450 г, 900 г и 1000 г.",
+      "Купить натуральный армянский мёд онлайн. Sers Honey — 100% натуральный горный разнотравный мёд из Вайка, Вайоц-Дзор. Заказать мёд 450 г, 900 г, 1000 г с доставкой по Армении.",
     nav: {
       about: "О нас",
       products: "Продукция",

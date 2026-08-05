@@ -8,8 +8,8 @@ export default function robots(): MetadataRoute.Robots {
     rules: [
       {
         userAgent: "*",
-        allow: ["/", "/hy", "/en", "/ru", "/images/"],
-        disallow: ["/admin", "/admin/", "/api/"],
+        allow: "/",
+        disallow: ["/admin/", "/api/"],
       },
       {
         userAgent: [
@@ -23,9 +23,14 @@ export default function robots(): MetadataRoute.Robots {
           "PerplexityBot",
           "Perplexity-User",
           "Applebot-Extended",
+          "Amazonbot",
+          "Meta-ExternalAgent",
+          "Meta-ExternalFetcher",
+          "Bytespider",
+          "YouBot",
         ],
-        allow: ["/", "/hy", "/en", "/ru", "/llms.txt", "/images/", "/brand/"],
-        disallow: ["/admin", "/admin/", "/api/"],
+        allow: ["/", "/llms.txt", "/brand/", "/images/"],
+        disallow: ["/admin/", "/api/"],
       },
     ],
     sitemap: `${baseUrl}/sitemap.xml`,

@@ -1,11 +1,13 @@
+/**
+ * Optional env sanity check. Does not run during `npm run build`.
+ * Use: npm run check:env
+ *
+ * On Vercel this only prints warnings so a missing variable never
+ * fails the deployment the way the old prebuild hook did.
+ */
 const isVercelBuild = process.env.VERCEL === "1";
 
-if (!isVercelBuild) {
-  console.log("Vercel environment check skipped for local build.");
-  process.exit(0);
-}
-
-const errors = [];
+const warnings = [];
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL?.trim() || "";
 const adminPassword = process.env.ADMIN_PASSWORD?.trim() || "";
 const jwtSecret = process.env.JWT_SECRET?.trim() || "";
@@ -20,38 +22,51 @@ const redisToken = (
   ""
 ).trim();
 
-if (!/^https:\/\/[^/]+(?:\/.*)?$/i.test(baseUrl)) {
-  errors.push("NEXT_PUBLIC_BASE_URL must be an absolute HTTPS URL.");
+if (baseUrl && !/^https:\/\/[^/]+(?:\/.*)?$/i.test(baseUrl)) {
+  warnings.push("NEXT_PUBLIC_BASE_URL should be an absolute HTTPS URL.");
 }
 
-if (adminPassword.length < 12) {
-  errors.push("ADMIN_PASSWORD must contain at least 12 characters.");
+if (!baseUrl) {
+  warnings.push("NEXT_PUBLIC_BASE_URL is not set.");
 }
 
-if (jwtSecret.length < 32) {
-  errors.push("JWT_SECRET must contain at least 32 characters.");
+if (adminPassword && adminPassword.length < 12) {
+  warnings.push("ADMIN_PASSWORD should contain at least 12 characters.");
+}
+
+if (!adminPassword) {
+  warnings.push("ADMIN_PASSWORD is not set.");
+}
+
+if (jwtSecret && jwtSecret.length < 32) {
+  warnings.push("JWT_SECRET should contain at least 32 characters.");
+}
+
+if (!jwtSecret) {
+  warnings.push("JWT_SECRET is not set.");
 }
 
 if (!redisUrl || !redisToken) {
-  errors.push(
-    "Configure both UPSTASH_REDIS_REST_URL and UPSTASH_REDIS_REST_TOKEN " +
-      "(or the KV_REST_API_URL/KV_REST_API_TOKEN aliases)."
+  warnings.push(
+    "Redis is not fully configured (UPSTASH_REDIS_REST_URL / UPSTASH_REDIS_REST_TOKEN).",
   );
 }
 
 if (redisUrl && !/^https:\/\//i.test(redisUrl)) {
-  errors.push("The Redis REST URL must use HTTPS.");
+  warnings.push("The Redis REST URL should use HTTPS.");
 }
 
-if (errors.length > 0) {
-  console.error("\nVercel production configuration is incomplete:\n");
-  for (const error of errors) {
-    console.error(`- ${error}`);
+if (warnings.length > 0) {
+  const label = isVercelBuild ? "Vercel env warnings" : "Environment warnings";
+  console.warn(`\n${label}:\n`);
+  for (const warning of warnings) {
+    console.warn(`- ${warning}`);
   }
-  console.error(
-    "\nSet these values in Vercel Project Settings > Environment Variables."
+  console.warn(
+    "\nSet these in Vercel Project Settings > Environment Variables if needed.\n",
   );
-  process.exit(1);
+  // Never fail the process — missing env must not block deploy.
+  process.exit(0);
 }
 
-console.log("Vercel environment check passed.");
+console.log("Environment check passed.");

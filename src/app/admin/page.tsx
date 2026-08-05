@@ -4,6 +4,8 @@ import { useEffect, useRef, useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import type { OrderRecord, OrderStatus } from "@/types/order";
+import { useAdminAlerts } from "@/components/AdminAlerts";
+import { AdminPartnerships } from "@/components/AdminPartnerships";
 
 type Lang = "hy" | "en" | "ru";
 
@@ -157,7 +159,7 @@ export default function AdminDashboard() {
   const [deletingOrderId, setDeletingOrderId] = useState<string | null>(null);
   const [orderFilter, setOrderFilter] = useState<OrderFilter>("all");
   const [orderQuery, setOrderQuery] = useState("");
-  const [activeTab, setActiveTab] = useState<"orders" | "content" | "sizes">("orders");
+  const [activeTab, setActiveTab] = useState<"orders" | "partnerships" | "content" | "sizes">("orders");
   const [editLang, setEditLang] = useState<Lang>("hy");
   const [message, setMessage] = useState<{ text: string; type: "success" | "error" } | null>(null);
   const [autoTranslation, setAutoTranslation] =
@@ -177,6 +179,14 @@ export default function AdminDashboard() {
   const knownOrderIdsRef = useRef<Set<string> | null>(null);
   const notificationTimerRef = useRef<number | null>(null);
   const router = useRouter();
+  const {
+    canInstall,
+    isStandalone,
+    notificationsEnabled,
+    enableNotifications,
+    alertNewOrders,
+    promptInstall,
+  } = useAdminAlerts();
 
   const showNotification = useCallback(
     (text: string, type: "success" | "error" = "success") => {
@@ -269,11 +279,20 @@ export default function AdminDashboard() {
         );
 
         if (newArrivals.length > 0) {
+          const preview = newArrivals
+            .slice(0, 2)
+            .map(
+              (order) =>
+                `${order.name} ${order.surname} · ${order.totalAmd.toLocaleString("hy-AM")}֏`,
+            )
+            .join(" · ");
+
           showNotification(
             newArrivals.length === 1
               ? "Նոր պատվեր է ստացվել"
-              : `${newArrivals.length} նոր պատվեր է ստացվել`
+              : `${newArrivals.length} նոր պատվեր է ստացվել`,
           );
+          void alertNewOrders(newArrivals.length, preview);
         }
       }
 
@@ -289,15 +308,33 @@ export default function AdminDashboard() {
       setOrdersLoading(false);
       setOrdersRefreshing(false);
     }
-  }, [router, showNotification]);
+  }, [alertNewOrders, router, showNotification]);
 
   useEffect(() => {
     void fetchContent();
     void fetchOrders();
 
-    const refreshTimer = window.setInterval(() => void fetchOrders(), 15_000);
+    let refreshTimer = window.setInterval(() => void fetchOrders(), 8_000);
+
+    const syncPolling = () => {
+      window.clearInterval(refreshTimer);
+      const interval =
+        document.visibilityState === "visible" ? 5_000 : 12_000;
+      refreshTimer = window.setInterval(() => void fetchOrders(), interval);
+      if (document.visibilityState === "visible") {
+        void fetchOrders();
+      }
+    };
+
+    const onFocus = () => void fetchOrders();
+
+    document.addEventListener("visibilitychange", syncPolling);
+    window.addEventListener("focus", onFocus);
+
     return () => {
       window.clearInterval(refreshTimer);
+      document.removeEventListener("visibilitychange", syncPolling);
+      window.removeEventListener("focus", onFocus);
       if (notificationTimerRef.current) {
         window.clearTimeout(notificationTimerRef.current);
       }
@@ -742,8 +779,58 @@ export default function AdminDashboard() {
             Admin
           </span>
         </div>
-        <div className="ml-auto flex shrink-0 items-center gap-2 sm:gap-4">
-          {activeTab !== "orders" && (
+        <div className="ml-auto flex shrink-0 flex-wrap items-center justify-end gap-2 sm:gap-3">
+          {!notificationsEnabled && (
+            <button
+              type="button"
+              onClick={() => {
+                void enableNotifications().then((result) => {
+                  if (result.ok) {
+                    showNotification("Ծանուցումները միացված են");
+                  } else if (result.reason === "denied") {
+                    showNotification(
+                      "Ծանուցումները արգելափակված են բրաուզերում",
+                      "error",
+                    );
+                  } else {
+                    showNotification(
+                      "Այս սարքը չի աջակցում ծանուցումներին",
+                      "error",
+                    );
+                  }
+                });
+              }}
+              className="border border-[var(--gold)] bg-[rgba(201,162,39,0.12)] px-3 py-2 text-xs text-[var(--gold-soft)] transition hover:bg-[rgba(201,162,39,0.2)] sm:text-sm"
+            >
+              Միացնել ծանուցումները
+            </button>
+          )}
+          {notificationsEnabled && (
+            <span className="hidden text-xs text-green-300/90 sm:inline">
+              Ծանուցումները միացված են
+            </span>
+          )}
+          {canInstall && (
+            <button
+              type="button"
+              onClick={() => {
+                void promptInstall().then((accepted) => {
+                  if (accepted) {
+                    showNotification("Admin հավելվածը տեղադրվեց");
+                  }
+                });
+              }}
+              className="border border-[var(--gold)] bg-gradient-to-b from-[var(--gold-soft)] to-[var(--gold)] px-3 py-2 text-xs font-semibold text-[#16120b] sm:text-sm"
+            >
+              Ներբեռնել Admin
+            </button>
+          )}
+          {!isStandalone && !canInstall && (
+            <span className="hidden max-w-[14rem] text-[0.68rem] leading-snug text-[#b8a990] md:inline">
+              Chrome/Android՝ ընտրացանկ → «Install app» / «Ավելացնել հիմնական էկրան»
+            </span>
+          )}
+          {(activeTab === "content" || activeTab === "sizes") && (
             <button
               onClick={handleSave}
               disabled={saving || pendingTranslationPaths.size > 0}
@@ -814,6 +901,17 @@ export default function AdminDashboard() {
             )}
           </button>
           <button
+            onClick={() => setActiveTab("partnerships")}
+            className={`relative shrink-0 pb-3 text-lg font-medium transition ${
+              activeTab === "partnerships" ? "text-[var(--gold-soft)]" : "text-[#b8a990] hover:text-white"
+            }`}
+          >
+            Համագործակցություն
+            {activeTab === "partnerships" && (
+              <motion.div layoutId="tabLine" className="absolute bottom-0 inset-x-0 h-0.5 bg-[var(--gold)]" />
+            )}
+          </button>
+          <button
             onClick={() => setActiveTab("sizes")}
             className={`relative shrink-0 pb-3 text-lg font-medium transition ${
               activeTab === "sizes" ? "text-[var(--gold-soft)]" : "text-[#b8a990] hover:text-white"
@@ -827,7 +925,7 @@ export default function AdminDashboard() {
         </div>
 
         {/* Global Language Selector for editable content */}
-        {activeTab !== "orders" && (
+        {(activeTab === "content" || activeTab === "sizes") && (
           <div className="mb-6 grid gap-3">
             <div className="flex w-fit max-w-full items-center gap-2 overflow-x-auto border border-[var(--line)] bg-black/35 p-1.5">
               <span className="shrink-0 px-3 text-xs uppercase tracking-wider text-[#b8a990]">
@@ -1198,6 +1296,8 @@ export default function AdminDashboard() {
             )}
           </section>
         )}
+
+        {activeTab === "partnerships" && <AdminPartnerships />}
 
         {/* Content Tab Section */}
         {activeTab === "content" && (

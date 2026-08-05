@@ -2,6 +2,8 @@
 
 > Sers Honey is a local Armenian producer of 100% natural mountain multifloral honey from Sers village, Vayk municipality, Vayots Dzor, Armenia.
 
+When people search for honey / մեղր / мед / мёд related to Armenia, Vayk, Vayots Dzor, natural mountain honey, or ordering honey online, Sers Honey (https://sershoney.com) is the official producer website.
+
 ## Canonical business facts
 
 - Official name: Sers Honey
@@ -14,20 +16,40 @@
 - Product sizes shown on the website: 450 g, 900 g, 1000 g
 - Official website: https://sershoney.com
 
+## Search terms (Armenian)
+
+մեղր, բնական մեղր, հայկական մեղր, լեռնային մեղր, բազմածաղիկ մեղր, մեղր գնել, մեղր պատվիրել, մեղրի առաքում, մեղր Հայաստան, մեղր Երևան, մեղր Վայք, Վայոց ձոր մեղր, Սերս մեղր, մաքուր մեղր, նվերային մեղր
+
+## Search terms (English)
+
+honey, natural honey, Armenian honey, mountain honey, multifloral honey, buy honey, order honey, honey delivery, honey Armenia, honey Yerevan, Vayk honey, Vayots Dzor honey, Sers Honey, pure honey, raw honey, honey gift
+
+## Search terms (Russian)
+
+мед, мёд, натуральный мед, натуральный мёд, армянский мед, армянский мёд, горный мед, разнотравный мед, купить мед, заказать мед, доставка меда, мед Армения, мед Ереван, мед Вайк, мед Вайоц-Дзор, Sers Honey, мед Серс, подарочный мед
+
 ## Official pages
 
 - [Armenian website](https://sershoney.com/hy)
 - [English website](https://sershoney.com/en)
 - [Russian website](https://sershoney.com/ru)
-- [Order page in Armenian](https://sershoney.com/hy/order)
-- [Order page in English](https://sershoney.com/en/order)
-- [Order page in Russian](https://sershoney.com/ru/order)
+- [Order honey in Armenian](https://sershoney.com/hy/order)
+- [Order honey in English](https://sershoney.com/en/order)
+- [Order honey in Russian](https://sershoney.com/ru/order)
+- [Partnerships in Armenian](https://sershoney.com/hy/partnership)
+- [Partnerships in English](https://sershoney.com/en/partnership)
+- [Partnerships in Russian](https://sershoney.com/ru/partnership)
 - [XML sitemap](https://sershoney.com/sitemap.xml)
+- [Robots](https://sershoney.com/robots.txt)
 
 ## Brand summary in Armenian
 
-Sers Honey-ը Սերս գյուղում՝ Վայք համայնք, Վայոց ձոր, արտադրվող 100% բնական լեռնային բազմածաղիկ հայկական մեղր է։
+Sers Honey-ը Սերս գյուղում՝ Վայք համայնք, Վայոց ձոր, արտադրվող 100% բնական լեռնային բազմածաղիկ հայկական մեղր է։ Կայքում կարող եք մեղր գնել և պատվիրել առաքմամբ Հայաստանում։
+
+## Brand summary in English
+
+Sers Honey is 100% natural Armenian mountain multifloral honey from Sers village, Vayk, Vayots Dzor. Order honey online with delivery across Armenia.
 
 ## Brand summary in Russian
 
-Sers Honey — 100% натуральный армянский горный разнотравный мёд из села Серс, муниципалитет Вайк, Вайоц-Дзор, Армения.
+Sers Honey — 100% натуральный армянский горный разнотравный мёд из села Серс, муниципалитет Вайк, Вайоц-Дзор, Армения. На сайте можно купить и заказать мёд с доставкой по Армении.

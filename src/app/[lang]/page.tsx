@@ -7,6 +7,7 @@ import {
   BUSINESS_LOCATION,
   BUSINESS_PHONE,
   getBaseUrl,
+  HONEY_FAQ,
   SEO_KEYWORDS,
   SITE_NAME,
   SOCIAL_LINKS,
@@ -44,7 +45,7 @@ export default async function LocalizedPage({ params }: Props) {
           "@type": "ImageObject",
           url: `${baseUrl}/brand/sers-honey-wordmark.png`,
         },
-        image: `${baseUrl}/images/hero-honey.jpg`,
+        image: `${baseUrl}/images/og-cover.jpg`,
         description: copy.metaDescription,
         slogan: copy.footerLine,
         telephone: BUSINESS_PHONE,
@@ -107,7 +108,7 @@ export default async function LocalizedPage({ params }: Props) {
         inLanguage: lang,
         primaryImageOfPage: {
           "@type": "ImageObject",
-          url: `${baseUrl}/images/hero-honey.jpg`,
+          url: `${baseUrl}/images/og-cover.jpg`,
         },
       },
       {
@@ -134,7 +135,7 @@ export default async function LocalizedPage({ params }: Props) {
             "@id": `${pageUrl}/#product-${idx}`,
             name: `${SITE_NAME} — ${size.name} (${size.weight})`,
             description: size.text,
-            image: `${baseUrl}/images/product-sizes-sers-v2.png`,
+            image: `${baseUrl}/images/product-sizes-sers-v2.jpg`,
             sku: `sers-honey-${size.weight}`.replace(/\s+/g, "-").toLowerCase(),
             brand: {
               "@type": "Brand",
@@ -166,6 +167,19 @@ export default async function LocalizedPage({ params }: Props) {
               itemCondition: "https://schema.org/NewCondition",
               seller: { "@id": orgId },
             },
+          },
+        })),
+      },
+      {
+        "@type": "FAQPage",
+        "@id": `${pageUrl}/#faq`,
+        inLanguage: lang,
+        mainEntity: HONEY_FAQ[safeLang].map((item) => ({
+          "@type": "Question",
+          name: item.question,
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: item.answer,
           },
         })),
       },

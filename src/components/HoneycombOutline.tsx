@@ -2,17 +2,37 @@ import type { CSSProperties } from "react";
 
 type HoneycombOutlineProps = {
   className?: string;
+  /** `lite` = fewer cells, base layer only (Android-friendly). */
+  mode?: "full" | "lite";
 };
 
 const RADIUS = 70;
 const HEX_WIDTH = Math.sqrt(3) * RADIUS;
 const HALF_WIDTH = HEX_WIDTH / 2;
 const ROW_STEP = RADIUS * 1.5;
-const CELL_COLUMNS = 10;
-const CELL_ROWS = 12;
-const WAVE_ORIGIN_COLUMN = (CELL_COLUMNS - 1) / 2;
-const WAVE_ORIGIN_ROW = (CELL_ROWS - 1) / 2;
-const MAX_WAVE_DISTANCE = Math.hypot(WAVE_ORIGIN_COLUMN, WAVE_ORIGIN_ROW);
+
+function buildCells(columns: number, rows: number) {
+  const originColumn = (columns - 1) / 2;
+  const originRow = (rows - 1) / 2;
+  const maxDistance = Math.hypot(originColumn, originRow);
+
+  return Array.from({ length: columns * rows }, (_, index) => {
+    const gridColumn = index % columns;
+    const gridRow = Math.floor(index / columns);
+    const column = gridColumn - 1;
+    const row = gridRow - 1;
+    const centerX = 91 + column * HEX_WIDTH + (row % 2 === 0 ? 0 : HALF_WIDTH);
+    const centerY = row * ROW_STEP;
+    const distance = Math.hypot(gridColumn - originColumn, gridRow - originRow);
+
+    return {
+      forwardDelay: distance * 0.16,
+      id: index,
+      path: hexPath(centerX, centerY),
+      reverseDelay: (maxDistance - distance) * 0.16,
+    };
+  });
+}
 
 function hexPath(centerX: number, centerY: number) {
   const halfRadius = RADIUS / 2;
@@ -28,30 +48,15 @@ function hexPath(centerX: number, centerY: number) {
   ].join(" ");
 }
 
-const cells = Array.from({ length: CELL_COLUMNS * CELL_ROWS }, (_, index) => {
-  const gridColumn = index % CELL_COLUMNS;
-  const gridRow = Math.floor(index / CELL_COLUMNS);
-  const column = gridColumn - 1;
-  const row = gridRow - 1;
-  const centerX = 91 + column * HEX_WIDTH + (row % 2 === 0 ? 0 : HALF_WIDTH);
-  const centerY = row * ROW_STEP;
-  const distance = Math.hypot(
-    gridColumn - WAVE_ORIGIN_COLUMN,
-    gridRow - WAVE_ORIGIN_ROW,
-  );
-
-  return {
-    forwardDelay: distance * 0.16,
-    id: index,
-    path: hexPath(centerX, centerY),
-    reverseDelay: (MAX_WAVE_DISTANCE - distance) * 0.16,
-  };
-});
+const FULL_CELLS = buildCells(10, 12);
+const LITE_CELLS = buildCells(5, 6);
 
 function OutlinePaths({
+  cells,
   className,
   animatedBase = false,
 }: {
+  cells: typeof FULL_CELLS;
   className: string;
   animatedBase?: boolean;
 }) {
@@ -73,7 +78,13 @@ function OutlinePaths({
   ));
 }
 
-export function HoneycombOutline({ className = "" }: HoneycombOutlineProps) {
+export function HoneycombOutline({
+  className = "",
+  mode = "full",
+}: HoneycombOutlineProps) {
+  const cells = mode === "lite" ? LITE_CELLS : FULL_CELLS;
+  const showWaves = mode === "full";
+
   return (
     <svg
       aria-hidden
@@ -82,14 +93,22 @@ export function HoneycombOutline({ className = "" }: HoneycombOutlineProps) {
       viewBox="0 0 1024 1024"
     >
       <g className="honeycomb-outline-base">
-        <OutlinePaths className="honeycomb-outline-base-path" animatedBase />
+        <OutlinePaths
+          cells={cells}
+          className="honeycomb-outline-base-path"
+          animatedBase
+        />
       </g>
-      <g className="honeycomb-outline-wave honeycomb-outline-wave-first">
-        <OutlinePaths className="honeycomb-outline-wave-path" />
-      </g>
-      <g className="honeycomb-outline-wave honeycomb-outline-wave-second">
-        <OutlinePaths className="honeycomb-outline-wave-path" />
-      </g>
+      {showWaves ? (
+        <>
+          <g className="honeycomb-outline-wave honeycomb-outline-wave-first">
+            <OutlinePaths cells={cells} className="honeycomb-outline-wave-path" />
+          </g>
+          <g className="honeycomb-outline-wave honeycomb-outline-wave-second">
+            <OutlinePaths cells={cells} className="honeycomb-outline-wave-path" />
+          </g>
+        </>
+      ) : null}
     </svg>
   );
 }

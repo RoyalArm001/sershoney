@@ -18,22 +18,40 @@ type Props = {
 
 const orderSeoCopy: Record<Lang, { title: string; description: string; keywords: string[] }> = {
   hy: {
-    title: "Պատվիրել բնական մեղր Վայքից",
+    title: "Մեղր պատվիրել առցանց | Բնական մեղր գնել Հայաստանից",
     description:
-      "Պատվիրեք Sers Honey բնական լեռնային մեղրը Վայքից՝ առաքմամբ ամբողջ Հայաստանում կամ ստացեք Սերս գյուղից։",
-    keywords: ["բնական մեղր պատվիրել", "մեղր գնել", "մեղրի առաքում Հայաստան"],
+      "Պատվիրեք բնական մեղր առցանց։ Sers Honey լեռնային մեղր Վայքից՝ առաքում Հայաստանում կամ ինքնաառաքում Սերս գյուղից։ Մեղր գնել 450գ, 900գ, 1000գ։",
+    keywords: [
+      "մեղր պատվիրել",
+      "մեղր գնել",
+      "մեղր գնել առցանց",
+      "մեղրի առաքում Հայաստան",
+      "բնական մեղր պատվիրել",
+    ],
   },
   en: {
-    title: "Order Natural Armenian Honey",
+    title: "Order Honey Online | Buy Natural Honey in Armenia",
     description:
-      "Order Sers Honey natural mountain honey from Vayk with delivery across Armenia or pickup from Sers village.",
-    keywords: ["order Armenian honey", "buy honey Armenia", "honey delivery Armenia"],
+      "Order natural honey online. Sers Honey mountain honey from Vayk with delivery across Armenia or pickup from Sers village. Buy honey in 450g, 900g and 1000g jars.",
+    keywords: [
+      "order honey",
+      "buy honey",
+      "buy honey online Armenia",
+      "honey delivery Armenia",
+      "order natural honey",
+    ],
   },
   ru: {
-    title: "Заказать натуральный армянский мёд",
+    title: "Заказать мёд онлайн | Купить натуральный мёд в Армении",
     description:
-      "Закажите натуральный горный мёд Sers Honey из Вайка с доставкой по Армении или самовывозом из села Серс.",
-    keywords: ["заказать армянский мед", "купить мед в Армении", "доставка меда Армения"],
+      "Закажите натуральный мёд онлайн. Горный мёд Sers Honey из Вайка с доставкой по Армении или самовывозом из села Серс. Купить мёд 450 г, 900 г, 1000 г.",
+    keywords: [
+      "заказать мед",
+      "купить мед",
+      "купить мед онлайн Армения",
+      "доставка меда Армения",
+      "заказать натуральный мед",
+    ],
   },
 };
 
@@ -53,7 +71,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const seoCopy = orderSeoCopy[safeLang];
   const baseUrl = getBaseUrl();
   const pageUrl = `${baseUrl}/${lang}/order`;
-  const ogImage = `${baseUrl}/images/product-sizes-sers-v2.png`;
+  const ogImage = `${baseUrl}/images/product-sizes-sers-v2.jpg`;
 
   return {
     title: {
@@ -90,6 +108,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title: `${seoCopy.title} | ${SITE_NAME}`,
       description: seoCopy.description,
       images: [ogImage],
+    },
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        "max-image-preview": "large",
+        "max-snippet": -1,
+        "max-video-preview": -1,
+      },
     },
   };
 }

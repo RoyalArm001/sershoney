@@ -96,6 +96,11 @@ export default function AdminLoginPage() {
             {loading ? "Մուտք..." : "Մուտք գործել"}
           </motion.button>
         </form>
+
+        <p className="mt-6 text-center text-[0.72rem] leading-relaxed text-[#b8a990]">
+          Մուտքից հետո կարող եք ներբեռնել Admin-ը հեռախոսի վրա և միացնել
+          ծանուցումները, որպեսզի նոր պատվերների մասին անմիջապես իմանաք։
+        </p>
       </motion.div>
     </main>
   );

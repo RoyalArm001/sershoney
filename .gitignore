@@ -14,13 +14,3 @@ tsconfig.tsbuildinfo
 .env.*.local
 !.env.example
 data/orders.json
-node_modules/
-.next/
-dist/
-build/
-.vercel/
-.env.development.local
-.env.production.local
-
-.vercel
-.env*

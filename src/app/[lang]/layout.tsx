@@ -29,7 +29,7 @@ export async function generateMetadata({
 
   const baseUrl = getBaseUrl();
   const pageUrl = `${baseUrl}/${lang}`;
-  const ogImage = `${baseUrl}/images/hero-honey.jpg`;
+  const ogImage = `${baseUrl}/images/og-cover.jpg`;
 
   return {
     title: {

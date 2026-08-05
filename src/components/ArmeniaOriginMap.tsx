@@ -157,7 +157,7 @@ export function ArmeniaOriginMap({ lang }: ArmeniaOriginMapProps) {
           </g>
         </svg>
 
-        <div className="min-w-0 border-l border-[rgba(224,197,106,0.45)] pl-4 lg:absolute lg:right-0 lg:top-[24%] lg:w-[13rem] lg:bg-[var(--panel-bg)] lg:py-2 lg:pr-2 lg:backdrop-blur-[2px]">
+        <div className="min-w-0 border-l border-[rgba(224,197,106,0.45)] pl-4 lg:absolute lg:right-0 lg:top-[24%] lg:w-[13rem] lg:bg-[var(--panel-bg)] lg:py-2 lg:pr-2">
           <span className="block text-[0.66rem] uppercase text-[var(--gold)] sm:text-[0.7rem]">
             {copy.eyebrow}
           </span>

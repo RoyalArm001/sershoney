@@ -43,17 +43,18 @@ export async function POST(request: Request) {
     const adminPassword = getAdminPassword();
 
     if (passwordsMatch(password, adminPassword)) {
-      // Create session payload with 24 hour expiry
-      const expiry = Date.now() + 24 * 60 * 60 * 1000;
+      // Keep admin session active for 30 days (PWA / phone install).
+      const maxAgeSeconds = 30 * 24 * 60 * 60;
+      const expiry = Date.now() + maxAgeSeconds * 1000;
       const token = await signToken({ admin: true, exp: expiry });
 
       const response = NextResponse.json({ success: true });
       response.cookies.set("session", token, {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
-        sameSite: "strict",
+        sameSite: "lax",
         path: "/",
-        maxAge: 24 * 60 * 60, // 24 hours in seconds
+        maxAge: maxAgeSeconds,
       });
 
       return response;

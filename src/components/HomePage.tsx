@@ -10,6 +10,10 @@ import { BrandLogo } from "@/components/BrandLogo";
 import { PostsGallery } from "@/components/PostsGallery";
 import { ArmeniaOriginMap } from "@/components/ArmeniaOriginMap";
 import { BusinessContact } from "@/components/BusinessContact";
+import { CustomerOrderWatcher } from "@/components/CustomerOrderWatcher";
+import { SocialLinks } from "@/components/SocialLinks";
+import { BusinessCards } from "@/components/BusinessCards";
+import { HoneySafety } from "@/components/HoneySafety";
 
 type Props = {
   lang: Lang;
@@ -22,6 +26,7 @@ export function HomePage({ lang, copy }: Props) {
 
   return (
     <>
+      <CustomerOrderWatcher lang={lang} />
       <Header lang={lang} labels={copy.nav} />
 
       <main id="top" className="min-w-0 overflow-x-clip">
@@ -30,17 +35,17 @@ export function HomePage({ lang, copy }: Props) {
         >
           <div className="mx-auto grid w-full max-w-[1540px] items-center gap-8 sm:gap-10 lg:grid-cols-[minmax(0,46rem)_minmax(19rem,1fr)] lg:gap-[clamp(2rem,5vw,6rem)]">
             <motion.div
-              initial={{ opacity: 0, y: 36, filter: "blur(8px)" }}
-              animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-              transition={{ duration: 1.15, ease: [0.16, 1, 0.3, 1] }}
+              initial={reduceMotion ? false : { opacity: 0, y: 28 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
               className="w-full min-w-0 max-w-[46rem] pb-[max(env(safe-area-inset-bottom),0px)] lg:self-end"
             >
               <h1 className="mb-5 w-[min(86vw,31rem)] max-w-full drop-shadow-[0_18px_34px_rgba(0,0,0,0.34)] sm:w-[34rem] lg:w-[38rem]">
                 <BrandLogo className="w-full" />
               </h1>
-              <h1 className="mb-4 max-w-[19ch] text-balance text-[1.2rem] font-medium leading-snug sm:text-[1.35rem] lg:text-[1.55rem]">
+              <p className="mb-4 max-w-[19ch] text-balance text-[1.2rem] font-medium leading-snug sm:text-[1.35rem] lg:text-[1.55rem]">
                 {copy.hero.subtitle}
-              </h1>
+              </p>
               <p className="mb-7 max-w-[40ch] text-pretty text-[0.98rem] text-[var(--muted)] sm:text-base">{copy.hero.lead}</p>
               <div className="grid gap-3 sm:flex sm:flex-wrap">
                 <motion.a
@@ -57,7 +62,7 @@ export function HomePage({ lang, copy }: Props) {
                   whileTap={reduceMotion ? undefined : { scale: 0.99 }}
                   transition={softSpring}
                   href={`/${lang}#about`}
-                  className="inline-flex min-h-12 items-center justify-center rounded-sm border border-[var(--line)] bg-[var(--surface)] px-5 text-center backdrop-blur-sm"
+                  className="inline-flex min-h-12 items-center justify-center rounded-sm border border-[var(--line)] bg-[var(--surface)] px-5 text-center"
                 >
                   {copy.hero.learnMore}
                 </motion.a>
@@ -68,7 +73,7 @@ export function HomePage({ lang, copy }: Props) {
               initial={{ opacity: 0, x: 28, scale: 0.96 }}
               animate={{ opacity: 1, x: 0, scale: 1 }}
               transition={{ duration: 1.2, delay: 0.28, ease: [0.16, 1, 0.3, 1] }}
-              className="w-full max-w-[28rem] justify-self-center lg:self-center lg:justify-self-end"
+              className="w-full max-w-[21rem] justify-self-center sm:max-w-[24rem] lg:max-w-[28rem] lg:self-center lg:justify-self-end"
             >
               <ArmeniaOriginMap lang={lang} />
             </motion.div>
@@ -77,8 +82,6 @@ export function HomePage({ lang, copy }: Props) {
           <motion.div
             className="absolute bottom-8 right-[clamp(1.25rem,3vw,2.5rem)] hidden items-center gap-2 text-[0.72rem] uppercase tracking-[0.18em] text-[var(--muted)] md:flex"
             style={{ writingMode: "vertical-rl" }}
-            animate={{ opacity: [0.4, 0.9, 0.4] }}
-            transition={{ duration: 2.4, repeat: Infinity }}
           >
             {copy.hero.scroll}
             <span className="mt-2 block h-12 w-px bg-gradient-to-b from-[var(--gold)] to-transparent" />
@@ -112,7 +115,7 @@ export function HomePage({ lang, copy }: Props) {
               <motion.div
                 whileHover={reduceMotion ? undefined : { scale: 1.015 }}
                 transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-                className="relative aspect-[4/5] w-full"
+                className="relative mx-auto aspect-[4/3] w-full max-w-[31rem] sm:aspect-[4/5] lg:max-w-none"
               >
                 <Image
                   src="/images/hero-jar.jpg"
@@ -120,6 +123,7 @@ export function HomePage({ lang, copy }: Props) {
                   fill
                   className="object-cover object-center"
                   sizes="(max-width: 1024px) 100vw, 50vw"
+                  quality={72}
                 />
               </motion.div>
             </Reveal>
@@ -185,6 +189,7 @@ export function HomePage({ lang, copy }: Props) {
             </ul>
           </div>
         </section>
+        <HoneySafety lang={lang} />
 
         <section id="products" className="overflow-x-clip px-[clamp(1rem,3vw,2.5rem)] py-[clamp(4.5rem,8vw,7rem)]">
           <div className="mx-auto w-full max-w-[1240px]">
@@ -202,13 +207,14 @@ export function HomePage({ lang, copy }: Props) {
             </Reveal>
 
             <Reveal className="mb-8 overflow-hidden rounded-sm border border-[var(--line)] shadow-[0_24px_70px_rgba(0,0,0,0.24)]">
-              <div className="relative aspect-[3/2] w-full">
+              <div className="relative mx-auto aspect-[16/10] w-full max-w-[48rem] sm:aspect-[3/2] lg:max-w-none">
                 <Image
-                  src="/images/product-sizes-sers-v2.png"
+                  src="/images/product-sizes-sers-v2.jpg"
                   alt={copy.sections.productsTitle}
                   fill
                   className="object-cover object-center"
                   sizes="(max-width: 1240px) 100vw, 1240px"
+                  quality={70}
                 />
               </div>
             </Reveal>
@@ -258,13 +264,14 @@ export function HomePage({ lang, copy }: Props) {
         <section id="gifts" className="overflow-x-clip px-[clamp(1rem,3vw,2.5rem)] py-[clamp(4.5rem,8vw,7rem)]">
           <div className="mx-auto grid w-full max-w-[1240px] items-center gap-8 lg:grid-cols-[1.05fr_0.95fr] lg:gap-14">
             <Reveal className="overflow-hidden rounded-sm border border-[var(--line)] shadow-[0_24px_60px_rgba(0,0,0,0.22)]">
-              <div className="relative aspect-[4/5] w-full">
+              <div className="relative mx-auto aspect-[4/3] w-full max-w-[31rem] sm:aspect-[4/5] lg:max-w-none">
                 <Image
                   src="/images/gift-box.jpg"
                   alt={copy.sections.giftsTitle}
                   fill
                   className="object-cover object-center"
                   sizes="(max-width: 1024px) 100vw, 50vw"
+                  quality={72}
                 />
               </div>
             </Reveal>
@@ -303,12 +310,24 @@ export function HomePage({ lang, copy }: Props) {
             </Reveal>
           </div>
         </section>
+        <BusinessCards lang={lang} />
       </main>
 
       <footer className="border-t border-[var(--line)] px-[clamp(1.25rem,3vw,2.5rem)] py-10 text-center">
         <BrandLogo className="mx-auto w-[9.5rem]" />
         <p className="mt-2 text-[var(--gold)]">{copy.footerLine}</p>
         <BusinessContact className="mx-auto mt-4" lang={lang} />
+        <SocialLinks className="mt-5" />
+        <a
+          href={`/${lang}/partnership`}
+          className="mt-5 inline-flex text-sm text-[var(--gold-soft)] underline-offset-4 transition hover:text-[var(--ink)] hover:underline"
+        >
+          {lang === "hy"
+            ? "Համագործակցել Sers Honey-ի հետ"
+            : lang === "ru"
+              ? "Сотрудничать с Sers Honey"
+              : "Partner with Sers Honey"}
+        </a>
         <p className="mt-6 text-sm text-[var(--muted)]">
           © {new Date().getFullYear()} Sers Honey · {copy.footerMeta}
         </p>

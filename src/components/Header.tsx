@@ -39,7 +39,16 @@ export function Header({ lang, labels }: HeaderProps) {
   ];
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24);
+    let ticking = false;
+    const onScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      window.requestAnimationFrame(() => {
+        const next = window.scrollY > 24;
+        setScrolled((prev) => (prev === next ? prev : next));
+        ticking = false;
+      });
+    };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
@@ -113,7 +122,7 @@ export function Header({ lang, labels }: HeaderProps) {
     <header
       className={`fixed inset-x-0 top-0 z-40 flex h-[4.5rem] items-center justify-between px-[clamp(1rem,3vw,2.5rem)] transition-all duration-300 ${
         scrolled
-          ? "border-b border-[var(--line)] bg-[var(--header-bg)] backdrop-blur-md"
+          ? "border-b border-[var(--line)] bg-[var(--header-bg)]"
           : "border-b border-transparent"
       }`}
     >
@@ -131,7 +140,7 @@ export function Header({ lang, labels }: HeaderProps) {
       <button
         ref={toggleRef}
         type="button"
-        className="mobile-nav-toggle fixed z-50 flex h-11 w-11 shrink-0 flex-col items-center justify-center gap-1.5 rounded-sm border border-[var(--gold)] bg-[var(--control-bg)] shadow-[0_10px_28px_var(--shadow-color)] backdrop-blur-md"
+        className="mobile-nav-toggle fixed z-50 flex h-11 w-11 shrink-0 flex-col items-center justify-center gap-1.5 rounded-sm border border-[var(--gold)] bg-[var(--control-bg)] shadow-[0_10px_28px_var(--shadow-color)]"
         aria-label={labels.menuLabel}
         aria-expanded={open}
         aria-controls="mobile-navigation"
@@ -182,9 +191,10 @@ export function Header({ lang, labels }: HeaderProps) {
             ref={menuRef}
             id="mobile-navigation"
             aria-label={labels.menuLabel}
-            initial={{ opacity: 0, backdropFilter: "blur(0px)" }}
-            animate={{ opacity: 1, backdropFilter: "blur(8px)" }}
-            exit={{ opacity: 0, backdropFilter: "blur(0px)" }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
             className="mobile-nav-panel fixed inset-0 z-40 flex min-h-dvh overflow-y-auto overscroll-contain bg-[var(--menu-bg)] px-[max(1rem,env(safe-area-inset-left))] pb-[max(1.25rem,env(safe-area-inset-bottom))] pt-[max(5rem,calc(env(safe-area-inset-top)+4.25rem))] xl:hidden"
           >
             <div className="mobile-nav-content m-auto flex w-full max-w-[30rem] flex-col gap-2.5">

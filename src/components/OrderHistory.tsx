@@ -9,6 +9,7 @@ import {
   mergeOrderStatuses,
   readOrderHistory,
 } from "@/lib/order-history";
+import { notifyOrderStatusChanges } from "@/lib/customer-notifications";
 import type {
   CustomerOrderSummary,
   OrderStatus,
@@ -184,13 +185,14 @@ export function OrderHistory({ lang }: { lang: Lang }) {
         Array.isArray(result.orders) ? result.orders : []
       );
       setOrders(merged);
+      void notifyOrderStatusChanges(merged, lang);
     } catch (error) {
       console.error(error);
       setSyncError(true);
     } finally {
       setSyncing(false);
     }
-  }, []);
+  }, [lang]);
 
   useEffect(() => {
     void syncOrders();
