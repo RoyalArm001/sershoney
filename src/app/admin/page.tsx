@@ -786,7 +786,9 @@ export default function AdminDashboard() {
               onClick={() => {
                 void enableNotifications().then((result) => {
                   if (result.ok) {
-                    showNotification("Ծանուցումները միացված են");
+                    showNotification(
+                      "Ծանուցումները միացված են (աշխատում է նաև փակված էկրանին)",
+                    );
                   } else if (result.reason === "denied") {
                     showNotification(
                       "Ծանուցումները արգելափակված են բրաուզերում",

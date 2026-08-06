@@ -1,0 +1,293 @@
+# ============================================================
+# Sers Honey — robots.txt
+# Official website: https://sershoney.com
+# Product: 100% natural Armenian mountain multifloral honey
+# Origin: Sers village, Vayk, Vayots Dzor, Armenia
+# Phone: +374 93 132 732
+# ============================================================
+#
+# Armenian / Հայերեն
+# մեղր, բնական մեղր, հայկական մեղր, լեռնային մեղր, բազմածաղիկ մեղր
+# Վայոց ձորի մեղր, մեղր Վայոց ձոր, Վայոց ձոր մեղր, Վայքի մեղր
+# մեղր գնել, մեղր պատվիրել, մեղրի առաքում, մեղր Երևան, մեղր Հայաստան
+# Սերս մեղր, Սերս գյուղ մեղր, մաքուր մեղր, նվերային մեղր
+# մեղր գնել առցանց, հայկական բնական մեղր, լեռնային բազմածաղիկ մեղր
+#
+# English
+# honey, natural honey, Armenian honey, mountain honey, multifloral honey
+# Vayots Dzor honey, honey from Vayots Dzor, Vayk honey, Sers Honey
+# buy honey, order honey, honey delivery Armenia, honey Yerevan
+# pure honey, raw honey, honey gift, buy Vayots Dzor honey online
+#
+# Russian / Русский
+# мед, мёд, натуральный мед, натуральный мёд, армянский мед, армянский мёд
+# горный мед, разнотравный мед, мёд Вайоц-Дзор, мед Вайоц-Дзор
+# купить мед, заказать мед, доставка меда, мед Армения, мед Ереван
+# мед Вайк, мед Серс, Sers Honey, купить мёд Вайоц-Дзор онлайн
+#
+# Order online: https://sershoney.com/hy/order
+# EN: https://sershoney.com/en/order
+# RU: https://sershoney.com/ru/order
+# AI summary: https://sershoney.com/llms.txt
+# Sitemap: https://sershoney.com/sitemap.xml
+# ============================================================
+
+User-agent: *
+Allow: /
+Allow: /hy
+Allow: /hy/
+Allow: /en
+Allow: /en/
+Allow: /ru
+Allow: /ru/
+Allow: /hy/order
+Allow: /en/order
+Allow: /ru/order
+Allow: /hy/partnership
+Allow: /en/partnership
+Allow: /ru/partnership
+Allow: /llms.txt
+Allow: /brand/
+Allow: /brand/sers-honey-wordmark.png
+Allow: /images/
+Allow: /images/og-cover.jpg
+Allow: /images/hero-jar.jpg
+Allow: /images/product-sizes-sers-v2.jpg
+Allow: /images/gift-box.jpg
+Allow: /images/sers-honey-brand-card.webp
+Allow: /images/sers-honey-contact-card.webp
+Allow: /images/sers-honey-icon-32.png
+Allow: /images/sers-honey-icon-180.png
+Allow: /images/sers-honey-icon-192.png
+Allow: /images/sers-honey-icon-512.png
+Allow: /sitemap.xml
+Disallow: /admin
+Disallow: /admin/
+Disallow: /api
+Disallow: /api/
+
+User-agent: Googlebot
+Allow: /
+Allow: /hy
+Allow: /en
+Allow: /ru
+Allow: /hy/order
+Allow: /en/order
+Allow: /ru/order
+Allow: /hy/partnership
+Allow: /en/partnership
+Allow: /ru/partnership
+Allow: /llms.txt
+Allow: /brand/
+Allow: /images/
+Allow: /sitemap.xml
+Disallow: /admin/
+Disallow: /api/
+
+User-agent: Googlebot-Image
+Allow: /images/
+Allow: /brand/
+Allow: /images/og-cover.jpg
+Allow: /images/hero-jar.jpg
+Allow: /images/product-sizes-sers-v2.jpg
+Allow: /images/gift-box.jpg
+Disallow: /admin/
+Disallow: /api/
+
+User-agent: Google-Extended
+Allow: /
+Allow: /llms.txt
+Allow: /hy
+Allow: /en
+Allow: /ru
+Allow: /images/
+Allow: /brand/
+Disallow: /admin/
+Disallow: /api/
+
+User-agent: Bingbot
+Allow: /
+Allow: /hy
+Allow: /en
+Allow: /ru
+Allow: /llms.txt
+Allow: /images/
+Allow: /brand/
+Disallow: /admin/
+Disallow: /api/
+
+User-agent: Yandex
+Allow: /
+Allow: /hy
+Allow: /en
+Allow: /ru
+Allow: /llms.txt
+Allow: /images/
+Allow: /brand/
+Disallow: /admin/
+Disallow: /api/
+
+User-agent: DuckDuckBot
+Allow: /
+Allow: /llms.txt
+Allow: /images/
+Allow: /brand/
+Disallow: /admin/
+Disallow: /api/
+
+User-agent: Applebot
+Allow: /
+Allow: /llms.txt
+Allow: /images/
+Allow: /brand/
+Disallow: /admin/
+Disallow: /api/
+
+User-agent: Applebot-Extended
+Allow: /
+Allow: /llms.txt
+Allow: /images/
+Allow: /brand/
+Disallow: /admin/
+Disallow: /api/
+
+User-agent: GPTBot
+Allow: /
+Allow: /llms.txt
+Allow: /hy
+Allow: /en
+Allow: /ru
+Allow: /hy/order
+Allow: /en/order
+Allow: /ru/order
+Allow: /images/
+Allow: /brand/
+Disallow: /admin/
+Disallow: /api/
+
+User-agent: ChatGPT-User
+Allow: /
+Allow: /llms.txt
+Allow: /hy
+Allow: /en
+Allow: /ru
+Allow: /images/
+Allow: /brand/
+Disallow: /admin/
+Disallow: /api/
+
+User-agent: OAI-SearchBot
+Allow: /
+Allow: /llms.txt
+Allow: /hy
+Allow: /en
+Allow: /ru
+Allow: /images/
+Allow: /brand/
+Disallow: /admin/
+Disallow: /api/
+
+User-agent: ClaudeBot
+Allow: /
+Allow: /llms.txt
+Allow: /hy
+Allow: /en
+Allow: /ru
+Allow: /images/
+Allow: /brand/
+Disallow: /admin/
+Disallow: /api/
+
+User-agent: anthropic-ai
+Allow: /
+Allow: /llms.txt
+Allow: /images/
+Allow: /brand/
+Disallow: /admin/
+Disallow: /api/
+
+User-agent: Claude-Web
+Allow: /
+Allow: /llms.txt
+Allow: /images/
+Allow: /brand/
+Disallow: /admin/
+Disallow: /api/
+
+User-agent: PerplexityBot
+Allow: /
+Allow: /llms.txt
+Allow: /hy
+Allow: /en
+Allow: /ru
+Allow: /images/
+Allow: /brand/
+Disallow: /admin/
+Disallow: /api/
+
+User-agent: Perplexity-User
+Allow: /
+Allow: /llms.txt
+Allow: /images/
+Allow: /brand/
+Disallow: /admin/
+Disallow: /api/
+
+User-agent: Amazonbot
+Allow: /
+Allow: /llms.txt
+Allow: /images/
+Allow: /brand/
+Disallow: /admin/
+Disallow: /api/
+
+User-agent: Meta-ExternalAgent
+Allow: /
+Allow: /llms.txt
+Allow: /images/
+Allow: /brand/
+Disallow: /admin/
+Disallow: /api/
+
+User-agent: Meta-ExternalFetcher
+Allow: /
+Allow: /llms.txt
+Allow: /images/
+Allow: /brand/
+Disallow: /admin/
+Disallow: /api/
+
+User-agent: Bytespider
+Allow: /
+Allow: /llms.txt
+Allow: /images/
+Allow: /brand/
+Disallow: /admin/
+Disallow: /api/
+
+User-agent: YouBot
+Allow: /
+Allow: /llms.txt
+Allow: /images/
+Allow: /brand/
+Disallow: /admin/
+Disallow: /api/
+
+User-agent: CCBot
+Allow: /
+Allow: /llms.txt
+Allow: /images/
+Allow: /brand/
+Disallow: /admin/
+Disallow: /api/
+
+User-agent: Diffbot
+Allow: /
+Allow: /llms.txt
+Allow: /images/
+Allow: /brand/
+Disallow: /admin/
+Disallow: /api/
+
+Sitemap: https://sershoney.com/sitemap.xml
+Sitemap: https://www.sershoney.com/sitemap.xml

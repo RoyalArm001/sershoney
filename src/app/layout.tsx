@@ -1,9 +1,12 @@
 import type { Metadata, Viewport } from "next";
 import { Cormorant_Garamond, Noto_Sans_Armenian } from "next/font/google";
 import { headers } from "next/headers";
+import Script from "next/script";
 import "./globals.css";
 import { getBaseUrl, SITE_NAME } from "@/lib/seo";
 import { isLang } from "@/lib/i18n";
+
+const GA_MEASUREMENT_ID = "G-6ZPXWF727M";
 
 const cormorant = Cormorant_Garamond({
   subsets: ["latin", "cyrillic"],
@@ -120,7 +123,21 @@ export default async function RootLayout({
       <head>
         <link rel="preload" as="image" href="/brand/sers-honey-wordmark.png" />
       </head>
-      <body className="antialiased">{children}</body>
+      <body className="antialiased">
+        <Script
+          src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', '${GA_MEASUREMENT_ID}');
+          `}
+        </Script>
+        {children}
+      </body>
     </html>
   );
 }

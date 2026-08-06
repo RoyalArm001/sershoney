@@ -6,6 +6,7 @@ import {
 } from "@/content/regions";
 import { getComboById } from "@/content/pickup";
 import { isLang } from "@/lib/i18n";
+import { notifyAdminsNewOrder } from "@/lib/admin-push";
 import { createOrder, getOrderStatuses } from "@/lib/orders";
 import { isStorageError } from "@/lib/redis";
 import type {
@@ -165,6 +166,16 @@ export async function POST(request: Request) {
       comboId,
       totalAmd: calcOrderTotal(weightG, quantity, fulfillment === "delivery"),
     });
+
+    try {
+      await notifyAdminsNewOrder({
+        title: "Նոր պատվեր — Sers Honey",
+        body: `${order.name} ${order.surname} · ${order.totalAmd.toLocaleString("hy-AM")}֏`,
+        url: "/admin",
+      });
+    } catch (notifyError) {
+      console.warn("Admin push notification failed:", notifyError);
+    }
 
     return NextResponse.json(
       {

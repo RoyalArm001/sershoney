@@ -111,9 +111,9 @@ export type LocaleCopy = {
 
 export const locales: Record<Lang, LocaleCopy> = {
   hy: {
-    metaTitle: "Մեղր Հայաստանից | Sers Honey՝ բնական լեռնային մեղր Վայքից",
+    metaTitle: "Վայոց ձորի մեղր | Sers Honey՝ բնական լեռնային մեղր Վայքից",
     metaDescription:
-      "Գնեք բնական մեղր Հայաստանից։ Sers Honey՝ 100% բնական լեռնային բազմածաղիկ մեղր Վայքից, Վայոց ձոր։ Մեղր գնել առցանց՝ 450գ, 900գ, 1000գ, առաքում Հայաստանում։",
+      "Վայոց ձորի մեղր առցանց։ Sers Honey՝ Սերս գյուղի 100% բնական լեռնային բազմածաղիկ մեղր Վայքից, Վայոց ձոր, Հայաստան։ Մեղր գնել և պատվիրել՝ 450գ, 900գ, 1000գ, առաքում Երևան և ամբողջ Հայաստան։",
     nav: {
       about: "Մեր մասին",
       products: "Տեսականի",
@@ -242,9 +242,9 @@ export const locales: Record<Lang, LocaleCopy> = {
     footerMeta: "100% բնական արտադրանք",
   },
   en: {
-    metaTitle: "Buy Natural Honey in Armenia | Sers Honey Mountain Honey",
+    metaTitle: "Vayots Dzor Honey | Buy Natural Armenian Honey | Sers Honey",
     metaDescription:
-      "Buy natural Armenian honey online. Sers Honey is 100% natural mountain multifloral honey from Vayk, Vayots Dzor. Order honey in 450g, 900g and 1000g jars with delivery in Armenia.",
+      "Order Vayots Dzor honey online. Sers Honey is 100% natural mountain multifloral honey from Sers village near Vayk, Vayots Dzor, Armenia. Buy honey in 450g, 900g and 1000g jars with delivery across Armenia.",
     nav: {
       about: "About",
       products: "Products",
@@ -373,9 +373,9 @@ export const locales: Record<Lang, LocaleCopy> = {
     footerMeta: "100% natural product",
   },
   ru: {
-    metaTitle: "Купить натуральный мёд в Армении | Sers Honey горный мёд",
+    metaTitle: "Мёд Вайоц-Дзор | Купить натуральный армянский мёд | Sers Honey",
     metaDescription:
-      "Купить натуральный армянский мёд онлайн. Sers Honey — 100% натуральный горный разнотравный мёд из Вайка, Вайоц-Дзор. Заказать мёд 450 г, 900 г, 1000 г с доставкой по Армении.",
+      "Заказать мёд из Вайоц-Дзора онлайн. Sers Honey — 100% натуральный горный разнотравный мёд из села Серс, Вайк, Вайоц-Дзор, Армения. Купить мёд 450 г, 900 г, 1000 г с доставкой по Армении.",
     nav: {
       about: "О нас",
       products: "Продукция",

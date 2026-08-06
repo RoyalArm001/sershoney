@@ -1,5 +1,5 @@
-/* Shared service worker for Admin + customer order alerts on this device only. */
-const CACHE_NAME = "sers-honey-sw-v1";
+/* Shared service worker for Admin + customer order alerts. */
+const CACHE_NAME = "sers-honey-sw-v2";
 
 self.addEventListener("install", (event) => {
   event.waitUntil(self.skipWaiting());
@@ -17,6 +17,48 @@ self.addEventListener("activate", (event) => {
       await self.clients.claim();
     })(),
   );
+});
+
+async function showAlert(data) {
+  const title = data.title || "Sers Honey";
+  const options = {
+    body: data.body || "",
+    icon: "/images/sers-honey-icon-192.png",
+    badge: "/images/sers-honey-icon-192.png",
+    tag: data.tag || "sers-honey",
+    renotify: true,
+    requireInteraction: Boolean(data.requireInteraction),
+    data: { url: data.url || "/" },
+    vibrate: [180, 80, 180],
+  };
+
+  await self.registration.showNotification(title, options);
+}
+
+self.addEventListener("push", (event) => {
+  let data = {
+    title: "Նոր պատվեր — Sers Honey",
+    body: "Բացեք ադմին պանելը պատվերը տեսնելու համար",
+    url: "/admin",
+    tag: `sers-admin-order-${Date.now()}`,
+    requireInteraction: true,
+  };
+
+  try {
+    if (event.data) {
+      data = { ...data, ...event.data.json() };
+    }
+  } catch {
+    try {
+      if (event.data) {
+        data.body = event.data.text();
+      }
+    } catch {
+      /* keep defaults */
+    }
+  }
+
+  event.waitUntil(showAlert(data));
 });
 
 self.addEventListener("notificationclick", (event) => {
@@ -57,17 +99,13 @@ self.addEventListener("message", (event) => {
     return;
   }
 
-  const title = data.title || "Sers Honey";
-  const options = {
-    body: data.body || "",
-    icon: "/images/sers-honey-icon-192.png",
-    badge: "/images/sers-honey-icon-192.png",
-    tag: data.tag || "sers-honey",
-    renotify: true,
-    requireInteraction: Boolean(data.requireInteraction),
-    data: { url: data.url || "/" },
-    vibrate: [180, 80, 180],
-  };
-
-  event.waitUntil(self.registration.showNotification(title, options));
+  event.waitUntil(
+    showAlert({
+      title: data.title,
+      body: data.body,
+      tag: data.tag,
+      url: data.url,
+      requireInteraction: data.requireInteraction,
+    }),
+  );
 });
